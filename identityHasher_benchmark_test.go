@@ -2,8 +2,6 @@ package identityHasher
 
 import "testing"
 
-var benchmarkGenerateAndValidateHashResult bool
-
 func BenchmarkGenerateAndValidateHash(benchmark *testing.B) {
 	for benchmarkIteration := 0; benchmarkIteration < benchmark.N; benchmarkIteration++ {
 		password := getRandomString()
@@ -13,7 +11,7 @@ func BenchmarkGenerateAndValidateHash(benchmark *testing.B) {
 			panic(err)
 		}
 
-		benchmarkGenerateAndValidateHashResult, err = ValidateHash(password, hashed)
+		_, err = ValidateHash(password, hashed)
 		if err != nil {
 			panic(err)
 		}

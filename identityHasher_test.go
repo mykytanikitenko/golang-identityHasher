@@ -8,7 +8,7 @@ const password = "ololopassword"
 func TestValidateHash(test *testing.T) {
 	result, err := ValidateHash(password, hash)
 
-  test.Log(result)
+	test.Log(result)
 
 	if err != nil {
 		test.Error(err)
@@ -21,7 +21,7 @@ func TestValidateHash(test *testing.T) {
 
 func TestGenerateAndValidateHash(test *testing.T) {
 	hashed, err := Hash(password)
-  test.Log(hashed)
+	test.Log(hashed)
 
 	if err != nil {
 		test.Error(err)
