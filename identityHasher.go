@@ -24,6 +24,7 @@ func Hash(password string) (hashed string, err error) {
 	}
 
 	hash := pbkdf2.Key([]byte(password), salt, hashIterations, keyLength, sha1.New)
+
 	buffer := new(bytes.Buffer)
 	buffer.WriteByte(0)
 	buffer.Write(salt)
