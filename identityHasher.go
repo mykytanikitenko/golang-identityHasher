@@ -12,7 +12,7 @@ import (
 
 const (
 	saltSize       = 16
-	hashIterations = 0x3e8
+	hashIterations = 1000
 	keyLength      = 32
 	hashLength     = 1 + saltSize + keyLength
 )
