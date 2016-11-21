@@ -14,6 +14,7 @@ const (
 	saltSize       = 16
 	hashIterations = 0x3e8
 	keyLength      = 32
+	hashLength     = 1 + saltSize + keyLength
 )
 
 func Hash(password string) (hashed string, err error) {
@@ -23,20 +24,26 @@ func Hash(password string) (hashed string, err error) {
 	}
 
 	hash := pbkdf2.Key([]byte(password), salt, hashIterations, keyLength, sha1.New)
-	zeroByteWithSaltWithHash := append([]byte{0x0}, append(salt, hash...)...)
-	hashed = base64.StdEncoding.EncodeToString(zeroByteWithSaltWithHash[:])
+	buffer := new(bytes.Buffer)
+	buffer.WriteByte(0)
+	buffer.Write(salt)
+	buffer.Write(hash)
+
+	hashed = base64.StdEncoding.EncodeToString(buffer.Bytes())
 	return
 }
 
 func ValidateHash(password string, passwordHash string) (isEqual bool, err error) {
 	decodedHash, err := base64.StdEncoding.DecodeString(passwordHash)
-	if err != nil {
+	length := len(decodedHash)
+
+	if err != nil || length != hashLength || decodedHash[0] != 0 {
 		isEqual = false
 		return
 	}
 
 	salt := decodedHash[1 : saltSize+1]
-	hash := decodedHash[saltSize+1 : saltSize+1+keyLength]
+	hash := decodedHash[saltSize+1 : hashLength]
 
 	newHash := pbkdf2.Key([]byte(password), salt, hashIterations, keyLength, sha1.New)
 	isEqual = bytes.Equal(hash, newHash)
