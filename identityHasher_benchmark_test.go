@@ -13,7 +13,7 @@ func BenchmarkGenerateAndValidateHash(benchmark *testing.B) {
 			panic(err)
 		}
 
-		BenchmarkGenerateAndValidateHashResult, err = ValidateHash(password, hashed)
+		benchmarkGenerateAndValidateHashResult, err = ValidateHash(password, hashed)
 		if err != nil {
 			panic(err)
 		}
