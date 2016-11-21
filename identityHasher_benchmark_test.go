@@ -2,7 +2,7 @@ package identityHasher
 
 import "testing"
 
-var BenchmarkGenerateAndValidateHashResult bool
+var benchmarkGenerateAndValidateHashResult bool
 
 func BenchmarkGenerateAndValidateHash(benchmark *testing.B) {
 	for benchmarkIteration := 0; benchmarkIteration < benchmark.N; benchmarkIteration++ {
